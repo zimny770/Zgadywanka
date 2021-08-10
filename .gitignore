@@ -1,32 +1,88 @@
-# Prerequisites
-*.d
+#include <iostream>
+#include <ctime>
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+void PrintIntroduction(int Difficulty)
+{
+    
+    std::cout << "\nPrzed toba serwerownia numer  " << Difficulty;
+    std::cout << "  wpisz poprawne liczby aby wszystkich ocalic\nBedzie do tego potrzebne odnalezienie kilku kodow...";
+}
 
-# Precompiled Headers
-*.gch
-*.pch
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+bool PlayGame(int Difficulty)
+{
+    PrintIntroduction(Difficulty);
 
-# Fortran module files
-*.mod
-*.smod
+    const int CodeA = rand() % Difficulty + Difficulty;
+    const int CodeB = rand() % Difficulty + Difficulty;
+    const int CodeC = rand() % Difficulty + Difficulty;
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+    const int CodeSuma = CodeA + CodeB + CodeC;
+    const int CodeMnozenie = CodeA * CodeB * CodeC;
 
-# Executables
-*.exe
-*.out
-*.app
+    std::cout << std::endl;
+
+    std::cout << "\n+ 3 liczby reprezntuja kod";
+    std::cout << "\n+ Po dodaniu otrzymamy: " << CodeSuma;
+    std::cout << "\n+ Iloczyn tych liczb wynosi: " << CodeMnozenie;
+    
+    std::cout << std::endl;
+    
+    int GuessA, GuessB, GuessC;
+    
+    std::cout << std::endl;
+
+    std::cin >> GuessA;
+    std::cin >> GuessB;
+    std::cin >> GuessC;
+
+    std::cout << std::endl;
+
+    int GuessSuma = GuessA + GuessB + GuessC;
+    int GuessMnozenie = GuessA * GuessB * GuessC;
+
+    if(GuessSuma == CodeSuma && GuessMnozenie == CodeMnozenie)
+    {
+        std::cout << "!!!UDALO SIE JESTESMY CORAZ BLIZEJ NIE ZATRZYMUJ SIE!!!\n";
+        return true;
+    }
+
+    else
+    {
+        std::cout << "!!!NIESTETY TEN KOD JEST BLEDNY NIE PODDAWAJ SIE!!!\n";
+        return false;
+    }
+    
+}
+
+
+int main()
+{
+    srand(time(NULL));
+
+    std::cout << "\nWitaj agencie mamy dla ciebie zadane ktoremu tylko ty mozesz podolac!!";
+    
+    int LevelDifficulty = 1;
+    int MaxLevel = 6;
+    
+    while(MaxLevel >= LevelDifficulty)
+    {
+        bool bLevelComplete = PlayGame(LevelDifficulty);
+        std::cin.clear();
+        std::cin.ignore();
+
+        if(bLevelComplete)
+        {
+            ++LevelDifficulty;               
+        }
+
+        if(LevelDifficulty > MaxLevel)
+        {
+            std::cout << "\n\n!!!!!!AGENCIE WIEDZIELISMY ZE MOZEMY NA CIEBIE LICZYC!!!!!!\n\n\n";
+        }
+    }
+    
+    std::cout << "Swiat jest bezpieczny";
+
+    return 0;
+}
